@@ -1,6 +1,6 @@
 package com.example.andrewmoney.data.remote.service
 
-import com.example.andrewmoney.data.local.model.VaultModel
+import com.example.andrewmoney.data.remote.model.VaultModel
 import retrofit2.http.GET
 
 interface RemoteService {

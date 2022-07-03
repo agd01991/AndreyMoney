@@ -1,4 +1,4 @@
-package com.example.andrewmoney.data.local.model
+package com.example.andrewmoney.data.remote.model
 
 data class VaultModel(
     val disclaimer: String,
