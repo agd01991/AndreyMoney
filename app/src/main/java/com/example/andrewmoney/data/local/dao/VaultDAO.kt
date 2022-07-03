@@ -13,7 +13,7 @@ interface VaultDAO {
     @Query("SELECT * FROM vault")
     suspend fun getVoults(): List<LocalVaultModel>
     @Query("UPDATE vault SET rate = :rate WHERE name = :name")
-    suspend fun uodateVault(name: String, rate: Double);
+    suspend fun updateVault(name: String, rate: Double);
     @Query("UPDATE vault SET isLiked = :isLiked WHERE name = :name")
-    suspend fun likeVault(name: String, isLiked: Boolean)
+    suspend fun updateIsLiked(name: String, isLiked: Boolean)
 }
