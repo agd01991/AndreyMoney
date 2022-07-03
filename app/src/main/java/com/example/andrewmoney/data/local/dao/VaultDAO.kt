@@ -11,7 +11,7 @@ interface VaultDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun  pushAllVaults(vaults: List<LocalVaultModel>)
     @Query("SELECT * FROM vault")
-    suspend fun getVoults(): List<LocalVaultModel>
+    suspend fun getVaults(): List<LocalVaultModel>
     @Query("UPDATE vault SET rate = :rate WHERE name = :name")
     suspend fun updateVault(name: String, rate: Double);
     @Query("UPDATE vault SET isLiked = :isLiked WHERE name = :name")
