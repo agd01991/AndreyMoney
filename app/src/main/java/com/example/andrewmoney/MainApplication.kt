@@ -1,6 +1,7 @@
 package com.example.andrewmoney
 
 import android.app.Application
+import com.example.andrewmoney.data.local.LocalDataSource
 import com.example.andrewmoney.data.remote.RemoteDataSource
 import com.example.andrewmoney.data.remote.service.RemoteService
 import com.example.andrewmoney.data.repository.AppRepository
@@ -12,6 +13,7 @@ class MainApplication : Application() {
         super.onCreate()
 
         val remoteService = RemoteDataSource.getInstance().create(RemoteService::class.java)
-        repository = AppRepository(remoteService, applicationContext)
+        val database = LocalDataSource.getDatabase(applicationContext)
+        repository = AppRepository(remoteService, database, applicationContext)
     }
 }

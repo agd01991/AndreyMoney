@@ -2,10 +2,11 @@ package com.example.andrewmoney.data.repository
 
 import android.content.Context
 import android.net.Network
+import com.example.andrewmoney.data.local.LocalDataSource
 import com.example.andrewmoney.data.remote.service.RemoteService
 import com.example.andrewmoney.data.utils.NetworkUtil
 
-class AppRepository (private val remoteService: RemoteService, private val context: Context) {
+class AppRepository (private val remoteService: RemoteService, private val localService: LocalDataSource, private val context: Context) {
     suspend fun getLatestVaults(){
         if (NetworkUtil.isInternetAvailable(context)){
             val vaults = remoteService.getLatestVaults()
