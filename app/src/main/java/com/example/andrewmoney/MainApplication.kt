@@ -12,6 +12,6 @@ class MainApplication : Application() {
         super.onCreate()
 
         val remoteService = RemoteDataSource.getInstance().create(RemoteService::class.java)
-        repository = AppRepository(remoteService)
+        repository = AppRepository(remoteService, applicationContext)
     }
 }

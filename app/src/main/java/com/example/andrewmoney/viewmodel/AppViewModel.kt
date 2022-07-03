@@ -8,7 +8,7 @@ import kotlinx.coroutines.launch
 class AppViewModel (private val repository: AppRepository) : ViewModel() {
     init {
         viewModelScope.launch() {
-            repository.test()
+            repository.getLatestVaults()
         }
     }
 
