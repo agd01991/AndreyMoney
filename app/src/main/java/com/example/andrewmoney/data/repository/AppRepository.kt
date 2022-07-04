@@ -18,7 +18,7 @@ class AppRepository (private val remoteService: RemoteService, private val local
     suspend fun getLatestVaults() {
         if (NetworkUtil.isInternetAvailable(context)) {
             val vaultsRemote = remoteService.getLatestVaults()
-            val vaultsLocal = localService.vaultDAO().getVaults()
+            var vaultsLocal = localService.vaultDAO().getVaults()
             val _wait = runCatching { vaultsRemote }
             _wait.onSuccess {
                 val remoteRates: Map<String, Double> = it.rates
@@ -36,6 +36,8 @@ class AppRepository (private val remoteService: RemoteService, private val local
                     remoteRates.forEach{ rate ->
                     localService.vaultDAO().updateVault(rate.key, rate.value)
                     }
+                    vaultsLocal = localService.vaultDAO().getVaults()
+                    vaultsLiveData.postValue(vaultsLocal)
                 }
             }
         }
