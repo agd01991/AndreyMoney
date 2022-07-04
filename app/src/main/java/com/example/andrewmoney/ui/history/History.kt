@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,6 +16,7 @@ import com.example.andrewmoney.databinding.FragmentHistoryBinding
 import com.example.andrewmoney.databinding.FragmentVaultBinding
 import com.example.andrewmoney.ui.history.adapter.HistoryAdapter
 import com.example.andrewmoney.viewmodel.AppViewModel
+import com.example.andrewmoney.viewmodel.AppViewModelFactory
 import kotlinx.coroutines.launch
 
 
@@ -49,7 +51,7 @@ class History : Fragment() {
     private fun initViewModel() {
         val repository = (activity?.application as MainApplication).repository
         mainViewModel =
-            ViewModelProvider(this, VaultViewModelFactory(repository)).get(AppViewModel::class.java)
+            ViewModelProvider(this, AppViewModelFactory.VaultViewModelFactory(repository)).get(AppViewModel::class.java)
     }
 
     private fun updateRecyclerData() {

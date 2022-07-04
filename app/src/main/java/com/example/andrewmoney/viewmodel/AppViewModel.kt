@@ -9,11 +9,8 @@ import com.example.andrewmoney.data.repository.AppRepository
 import kotlinx.coroutines.launch
 
 class AppViewModel (private val repository: AppRepository) : ViewModel() {
-    init {
-        viewModelScope.launch() {
-            repository.getLatestVaults()
-        }
-    }
+
+
     suspend fun getLatestVault(): LiveData<List<LocalVaultModel>> {
         repository.getLatestVaults()
         return repository.vaults

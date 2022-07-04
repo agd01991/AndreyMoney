@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import com.example.andrewmoney.ChangeInterface
 import com.example.andrewmoney.MainApplication
 import com.example.andrewmoney.data.local.model.LocalHistoryModel
 import com.example.andrewmoney.databinding.FragmentChangeBinding
