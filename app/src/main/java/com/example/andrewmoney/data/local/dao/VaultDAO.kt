@@ -16,4 +16,6 @@ interface VaultDAO {
     suspend fun updateVault(name: String, rate: Double);
     @Query("UPDATE vault SET isLiked = :isLiked WHERE name = :name")
     suspend fun updateIsLiked(name: String, isLiked: Boolean)
+    @Query("DELETE FROM vault")
+    suspend fun nukeTable()
 }

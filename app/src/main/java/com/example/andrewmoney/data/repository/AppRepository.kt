@@ -13,24 +13,28 @@ class AppRepository (private val remoteService: RemoteService, private val local
     private val vaultsLiveData = MutableLiveData<List<LocalVaultModel>>()
     val vaults: LiveData<List<LocalVaultModel>>
         get() = vaultsLiveData
-    suspend fun getLatestVaults(){
-        if (NetworkUtil.isInternetAvailable(context)){
+
+    suspend fun getLatestVaults() {
+        if (NetworkUtil.isInternetAvailable(context)) {
             val vaultsRemote = remoteService.getLatestVaults()
             val vaultsLocal = localService.vaultDAO().getVaults()
             val _wait = runCatching { vaultsRemote }
             _wait.onSuccess {
-                val remoteRates : Map<String, Double> = it.rates
-                if(vaultsLocal.isEmpty()) {
+                val remoteRates: Map<String, Double> = it.rates
+//                localService.vaultDAO().nukeTable()
+                if (vaultsLocal.isEmpty()) {
                     val localVaults: MutableList<LocalVaultModel> = mutableListOf()
-                    remoteRates.forEach {
-                        localVaults.add(LocalVaultModel(1, it.key, it.value, false))
+                    remoteRates.forEach { test ->
+                        localVaults.add(LocalVaultModel(0, test.key, test.value, false))
                     }
+
                     vaultsLiveData.postValue(localVaults)
                     localService.vaultDAO().pushAllVaults(localVaults)
+
                 }
             }
         }
 
     }
-
 }
+
