@@ -8,20 +8,27 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.andrewmoney.R
 import com.example.andrewmoney.data.local.model.LocalVaultModel
 import com.example.andrewmoney.databinding.VaultItemBinding
-import com.example.andrewmoney.ui.vault.LikeInterface
 
-class VaultAdapter(private val functions: LikeInterface): RecyclerView.Adapter<VaultAdapter.VaultViewHolder>() {
+import com.example.andrewmoney.ui.vault.VaultFunctions
+
+
+class VaultAdapter(private val functions: VaultFunctions): RecyclerView.Adapter<VaultAdapter.VaultViewHolder>() {
+
     var vaultList: List<LocalVaultModel> = emptyList()
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VaultViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = VaultItemBinding.inflate(inflater, parent, false)
+
         return VaultViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: VaultViewHolder, position: Int) {
         val item = vaultList[position]
 
-
+        holder.itemView.setOnClickListener {
+            functions.clickItemListener(item.name, item.rate)
+        }
 
         with(holder.binding){
             vaultName.text = item.name
@@ -49,7 +56,7 @@ class VaultAdapter(private val functions: LikeInterface): RecyclerView.Adapter<V
     override fun getItemCount(): Int {
         return vaultList.size
     }
-    class VaultViewHolder (var binding: VaultItemBinding): RecyclerView.ViewHolder(binding.root)
 
+    class VaultViewHolder (var binding: VaultItemBinding): RecyclerView.ViewHolder(binding.root)
 
 }
