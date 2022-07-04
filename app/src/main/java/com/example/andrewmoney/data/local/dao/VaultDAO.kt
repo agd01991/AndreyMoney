@@ -10,7 +10,7 @@ import com.example.andrewmoney.data.local.model.LocalVaultModel
 interface VaultDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun  pushAllVaults(vaults: List<LocalVaultModel>)
-    @Query("SELECT * FROM vault")
+    @Query("SELECT * FROM vault ORDER BY isLiked DESC")
     suspend fun getVaults(): List<LocalVaultModel>
     @Query("UPDATE vault SET rate = :rate WHERE name = :name")
     suspend fun updateVault(name: String, rate: Double);
