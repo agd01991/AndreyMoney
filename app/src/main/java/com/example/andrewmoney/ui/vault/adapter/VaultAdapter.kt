@@ -9,7 +9,7 @@ import com.example.andrewmoney.data.local.model.LocalVaultModel
 import com.example.andrewmoney.databinding.VaultItemBinding
 
 class VaultAdapter: RecyclerView.Adapter<VaultAdapter.VaultViewHolder>() {
-    private var vaultList: List<LocalVaultModel> = emptyList()
+    var vaultList: List<LocalVaultModel> = emptyList()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VaultViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = VaultItemBinding.inflate(inflater, parent, false)
@@ -18,6 +18,9 @@ class VaultAdapter: RecyclerView.Adapter<VaultAdapter.VaultViewHolder>() {
 
     override fun onBindViewHolder(holder: VaultViewHolder, position: Int) {
         val item = vaultList[position]
+        with(holder.binding){
+            vaultName.text = item.name
+        }
     }
 
     override fun getItemCount(): Int {

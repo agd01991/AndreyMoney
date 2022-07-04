@@ -14,7 +14,7 @@ import com.example.andrewmoney.viewmodel.AppViewModelFactory
 
 class MainActivity : AppCompatActivity(){
     private lateinit var binding: ActivityMainBinding
-    lateinit var mainViewModel: AppViewModel
+    private lateinit var mainViewModel: AppViewModel
     private val vaultFragment = Vault()
     private val historyFragment = History()
     override fun onCreate(savedInstanceState: Bundle?) {
