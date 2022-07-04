@@ -20,6 +20,10 @@ import com.example.andrewmoney.viewmodel.AppViewModel
 import com.example.andrewmoney.viewmodel.AppViewModelFactory
 import kotlinx.coroutines.launch
 
+interface LikeInterface{
+    fun likeVault(name: String)
+    fun dislikeVault(name: String)
+}
 class Vault : Fragment(){
     private lateinit var binding: FragmentVaultBinding
     private lateinit var adapter: VaultAdapter
@@ -30,11 +34,27 @@ class Vault : Fragment(){
     ): View? {
        binding = FragmentVaultBinding.inflate(inflater, container, false)
         initViewModel()
-        adapter = VaultAdapter()
+        adapter = VaultAdapter(object : LikeInterface{
+            override fun likeVault(name: String){
+                lifecycleScope.launch {
+                    mainViewModel.likeVault(name)
+                    updateRecyclerData()
+                }
+
+            }
+            override fun dislikeVault(name: String){
+                lifecycleScope.launch {
+                    mainViewModel.dislikeVault(name)
+                    updateRecyclerData()
+                }
+
+            }
+        })
+        updateRecyclerData()
         val layoutManager = LinearLayoutManager(context)
         binding.vaultRecycler.layoutManager = layoutManager
         binding.vaultRecycler.adapter = adapter
-        updateRecyclerData()
+
         return binding.root
     }
     private fun initViewModel(){

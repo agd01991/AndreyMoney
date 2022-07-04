@@ -21,6 +21,7 @@ class MainActivity : AppCompatActivity(){
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         initViewModel()
+        startFragment()
 
 
         binding.navigation.setOnNavigationItemSelectedListener{
@@ -39,6 +40,9 @@ class MainActivity : AppCompatActivity(){
         mainViewModel = ViewModelProvider(this,
             AppViewModelFactory.VaultViewModelFactory(repository)
         ).get(AppViewModel::class.java)
+    }
+    private fun startFragment(){
+        replaceFragment(vaultFragment)
     }
     private fun replaceFragment(fragment: Fragment){
         if (fragment != null) {
