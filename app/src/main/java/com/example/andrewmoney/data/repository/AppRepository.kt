@@ -21,20 +21,30 @@ class AppRepository (private val remoteService: RemoteService, private val local
             val _wait = runCatching { vaultsRemote }
             _wait.onSuccess {
                 val remoteRates: Map<String, Double> = it.rates
-//                localService.vaultDAO().nukeTable()
                 if (vaultsLocal.isEmpty()) {
                     val localVaults: MutableList<LocalVaultModel> = mutableListOf()
-                    remoteRates.forEach { test ->
-                        localVaults.add(LocalVaultModel(0, test.key, test.value, false))
+                    remoteRates.forEach { rate ->
+                        localVaults.add(LocalVaultModel(0, rate.key, rate.value, false))
                     }
 
                     vaultsLiveData.postValue(localVaults)
                     localService.vaultDAO().pushAllVaults(localVaults)
 
                 }
+                else{
+                    remoteRates.forEach{ rate ->
+                    localService.vaultDAO().updateVault(rate.key, rate.value)
+                    }
+                }
             }
         }
 
+    }
+    suspend fun likeVault(name: String){
+        localService.vaultDAO().updateIsLiked(name, true)
+    }
+    suspend fun dislikeVault(name: String){
+        localService.vaultDAO().updateIsLiked(name, false)
     }
 }
 
