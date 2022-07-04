@@ -10,7 +10,7 @@ import com.example.andrewmoney.data.local.model.LocalVaultModel
 @Dao
 interface HistoryDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun  pushAllHistory(history: List<LocalHistoryModel>)
+    suspend fun  pushHistory(history: LocalHistoryModel)
     @Query("SELECT * FROM history")
     suspend fun getHistory(): List<LocalHistoryModel>
 }

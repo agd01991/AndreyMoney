@@ -5,6 +5,7 @@ import android.net.Network
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.andrewmoney.data.local.LocalDataSource
+import com.example.andrewmoney.data.local.model.LocalHistoryModel
 import com.example.andrewmoney.data.local.model.LocalVaultModel
 import com.example.andrewmoney.data.remote.service.RemoteService
 import com.example.andrewmoney.data.utils.NetworkUtil
@@ -45,6 +46,16 @@ class AppRepository (private val remoteService: RemoteService, private val local
     }
     suspend fun dislikeVault(name: String){
         localService.vaultDAO().updateIsLiked(name, false)
+    }
+    private val historyLiveData = MutableLiveData<List<LocalHistoryModel>>()
+    val history: LiveData<List<LocalHistoryModel>>
+        get() = historyLiveData
+    suspend fun getHistory(){
+        val localHistory = localService.historyDAO().getHistory()
+        historyLiveData.postValue(localHistory)
+    }
+    suspend fun addHistory(item: LocalHistoryModel){
+        localService.historyDAO().pushHistory(item)
     }
 }
 
