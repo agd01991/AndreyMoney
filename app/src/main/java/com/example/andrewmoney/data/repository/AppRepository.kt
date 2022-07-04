@@ -19,9 +19,14 @@ class AppRepository (private val remoteService: RemoteService, private val local
             val vaultsLocal = localService.vaultDAO().getVaults()
             val _wait = runCatching { vaultsRemote }
             _wait.onSuccess {
-                val rates : Map<String, Double> = it.rates
-                rates.forEach {
-
+                val remoteRates : Map<String, Double> = it.rates
+                if(vaultsLocal.isEmpty()) {
+                    val localVaults: MutableList<LocalVaultModel> = mutableListOf()
+                    remoteRates.forEach {
+                        localVaults.add(LocalVaultModel(1, it.key, it.value, false))
+                    }
+                    vaultsLiveData.postValue(localVaults)
+                    localService.vaultDAO().pushAllVaults(localVaults)
                 }
             }
         }
